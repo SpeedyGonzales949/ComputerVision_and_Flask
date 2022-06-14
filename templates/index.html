@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Say Hello</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+    *{font-family: Arial;
+    }
+        input[type=submit], input[type=file] {
+          background-color: #000C66;
+          border: none;
+          color: white;
+          padding: 16px 32px;
+          text-decoration: none;
+          margin: 4px 2px;
+          cursor: pointer;
+          transition:0.5s ease-in;
+        }
+
+        input:hover{
+        background-color:#0000FF;
+        }
+
+        .greet{
+        display:flex;
+        flex-direction:column;
+        }
+        .greet form{
+        display:flex;
+        flex-direction:column;
+        margin: 0 auto;
+        }
+        select{
+        margin: 0 auto;
+        }
+        </style>
+</head>
+<body>
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </p>
+    {% if filename %}
+        <div>
+            <img src="{{ url_for('display_image', filename=filename) }}">
+        </div>
+    {% endif %}
+    <div class="greet">
+    <h2>Select a file to upload</h2>
+    <form action="/" method="post" enctype="multipart/form-data" id="data">
+        <input type="file" name="file" class="form-control" autocomplete="off" required>
+        <input type="submit" value="Submit" class="btn btn-info">
+    </form>
+        <select name="models" id="cars" form="data">
+        <option value="ResNet">ImageClassification - ResNet</option>
+        <option value="MobileNet">ImageClassification - MobileNet</option>
+        <option value="Yolo_v5">ObjectDetection - Yolo_v5</option>
+        </select>
+    </div>
+</body>
+</html>
